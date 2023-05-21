@@ -15,6 +15,10 @@ exports.getTodo = async (id) => {
   return Todo.findById(id);
 };
 
+exports.getAll = async () => {
+  return Todo.find();
+};
+
 exports.deleteTodo = async (id) => {
   return Todo.deleteOne({ _id: id });
 };

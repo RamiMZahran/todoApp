@@ -47,6 +47,19 @@ exports.getTodo = async (req, res) => {
   }
 };
 
+exports.getAll = async (req, res) => {
+  try {
+    const todos = await todoService.getAll();
+    return res
+      .status(200)
+      .send({ msg: 'Todos fetched successfully', data: todos });
+  } catch (err) {
+    return res
+      .status(400)
+      .send({ error: 'Error fetching todos', details: err.stack });
+  }
+};
+
 exports.deleteTodo = async (req, res) => {
   try {
     await todoService.deleteTodo(req.params.id);

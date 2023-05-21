@@ -8,6 +8,7 @@ appRouter.post(
   todoController.validate('createTodo'),
   todoController.createTodo
 );
+appRouter.get('/', todoController.getAll);
 
 appRouter.get('/:id', todoController.getTodo);
 
