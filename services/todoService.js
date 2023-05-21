@@ -1,7 +1,8 @@
 const { Todo } = require('../models/todo');
-exports.createTodo = async (text) => {
+exports.createTodo = async (text, userId) => {
   const todo = {
     text,
+    userId,
   };
   try {
     return Todo.create(todo);
@@ -11,18 +12,18 @@ exports.createTodo = async (text) => {
   }
 };
 
-exports.getTodo = async (id) => {
-  return Todo.findById(id);
+exports.getTodo = async (id, userId) => {
+  return Todo.findOne({ _id: id, userId });
 };
 
-exports.getAll = async () => {
-  return Todo.find();
+exports.getAll = async (userId) => {
+  return Todo.find(userId);
 };
 
-exports.deleteTodo = async (id) => {
-  return Todo.deleteOne({ _id: id });
+exports.deleteTodo = async (id, userId) => {
+  return Todo.deleteOne({ _id: id, userId });
 };
 
-exports.updateTodo = async (id, text, completed) => {
-  return Todo.updateTodo(id, text, completed);
+exports.updateTodo = async (id, text, completed, userId) => {
+  return Todo.updateTodo(id, text, completed, userId);
 };

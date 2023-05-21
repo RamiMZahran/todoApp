@@ -25,7 +25,7 @@ exports.createTodo = async (req, res) => {
   }
 
   try {
-    const todo = await todoService.createTodo(req.body.text);
+    const todo = await todoService.createTodo(req.body.text, req.auth._id);
     return res.status(201).send({ msg: 'Todo created', data: todo });
   } catch (err) {
     return res
@@ -36,7 +36,7 @@ exports.createTodo = async (req, res) => {
 
 exports.getTodo = async (req, res) => {
   try {
-    const todo = await todoService.getTodo(req.params.id);
+    const todo = await todoService.getTodo(req.params.id, req.auth._id);
     return res
       .status(200)
       .send({ msg: 'Todo fetched successfully', data: todo });
@@ -49,7 +49,7 @@ exports.getTodo = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const todos = await todoService.getAll();
+    const todos = await todoService.getAll(req.auth._id);
     return res
       .status(200)
       .send({ msg: 'Todos fetched successfully', data: todos });
@@ -62,7 +62,7 @@ exports.getAll = async (req, res) => {
 
 exports.deleteTodo = async (req, res) => {
   try {
-    await todoService.deleteTodo(req.params.id);
+    await todoService.deleteTodo(req.params.id, req.auth._id);
     return res.status(200).send({ msg: 'Todo deleted successfully' });
   } catch (err) {
     return res
@@ -76,7 +76,8 @@ exports.updateTodo = async (req, res) => {
     const todo = await todoService.updateTodo(
       req.params.id,
       req.body.text,
-      req.body.completed
+      req.body.completed,
+      req.auth._id
     );
     return res
       .status(200)
